@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+    public class Solution
+    {
+
+        private List<List<int>> levelOrder = new List<List<int>>();
+
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            if (root == null)
+            {
+                return  levelOrder.Cast<IList<int>>().ToList();
+            }
+
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+
+            while (queue.Count != 0)
+            {
+                List<int> level = new List<int>();
+                int size = queue.Count;
+
+                for(int ix=0; ix<size; ++ix)
+                {
+                    TreeNode treeNode = queue.Dequeue();
+                    if(treeNode.left != null)
+                    {
+                        queue.Enqueue(treeNode.left);
+                    }
+                    if(treeNode.right != null)
+                    {
+                        queue.Enqueue (treeNode.right);
+                    }
+                    level.Add(treeNode.val);
+                }
+                levelOrder.Add(level);
+            }
+            return  levelOrder.Cast<IList<int>>().ToList();
+        }
+    }
