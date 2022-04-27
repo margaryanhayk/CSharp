@@ -1,0 +1,30 @@
+//You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+//Find two lines that together with the x-axis form a container, such that the container contains the most water.
+//Return the maximum amount of water a container can store.
+
+public class Solution
+{
+    public int MaxArea(int[] height)
+    {
+        int minIndex = 0, p = 0;
+        int maxIndex = height.Length - 1, q = height.Length - 1;
+        int area = 0;
+        while(p < q)
+        {
+            int tmpArea = areaForTwoLines(height[p], height[q], p, q);
+            area = (tmpArea >= area) ? tmpArea : area;
+
+            if (height[p] < height[q])
+                ++p;
+            else
+                --q;
+        }
+        return area;
+    }
+
+    private int areaForTwoLines(int height1, int height2, int index1, int index2)
+    {
+        int maxHeight = (height1 < height2) ? height1 : height2;
+        return maxHeight * (index2 - index1);
+    }
+}
