@@ -11,21 +11,14 @@
 
             foreach (char elem in s)
             {
-                if ((elem == '{')
-                   || (elem == '[')
-                   || (elem == '('))
-                {
-                    stack.Push(elem);
-                }
+                if ((elem == '{') || (elem == '[') || (elem == '('))
+                     stack.Push(elem);  
                 else
                 {
                     if( (stack.Count == 0) || (!IsClosingValid(stack.Pop(), elem)))
-                    {
-                        return false;
-                    }
+                        return false;  
                 }
             }
-
             return (stack.Count == 0);
         }
 
