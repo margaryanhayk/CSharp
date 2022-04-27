@@ -1,0 +1,42 @@
+//Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+//An input string is valid if:
+//Open brackets must be closed by the same type of brackets.
+//Open brackets must be closed in the correct order.
+   
+   public class Solution
+    {
+        public bool IsValid(string s)
+        {
+            Stack<char> stack = new Stack<char>();
+
+            foreach (char elem in s)
+            {
+                if ((elem == '{')
+                   || (elem == '[')
+                   || (elem == '('))
+                {
+                    stack.Push(elem);
+                }
+                else
+                {
+                    if( (stack.Count == 0) || (!IsClosingValid(stack.Pop(), elem)))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return (stack.Count == 0);
+        }
+
+        private bool IsClosingValid(char first, char sec)
+        {
+            return (first, sec) switch
+            {
+                ('(', ')') => true,
+                ('{', '}') => true,
+                ('[', ']') => true,
+                _=> false
+            };
+        }
+    }
