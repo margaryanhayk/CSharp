@@ -1,0 +1,31 @@
+//Given n non-negative integers representing an elevation map where the width of each bar is 1, 
+//compute how much water it can trap after raining.
+
+public class Solution
+{
+    public int Trap(int[] height)
+    {
+        if (height.Length == 0)
+            return 0;
+        int size = height.Length;
+        int[] fromLeftToRight = new int[size];
+        int[] fromRightToLeft = new int[size];
+        fromLeftToRight[0] = height[0];
+        fromRightToLeft[size - 1] = height[size - 1];
+        for (int ix = 1; ix < size; ++ix)
+        {
+            fromLeftToRight[ix] = (height[ix] > fromLeftToRight[ix - 1]) ? height[ix] : fromLeftToRight[ix - 1];
+        }
+        for (int ix = size - 2; ix >= 0; --ix)
+        {
+            fromRightToLeft[ix] = (height[ix] > fromRightToLeft[ix + 1]) ? height[ix] : fromRightToLeft[ix + 1];
+        }
+        int result = 0;
+        for (int ix = 0; ix < size; ++ix)
+        {
+            int intersection = fromLeftToRight[ix] < fromRightToLeft[ix] ? fromLeftToRight[ix] : fromRightToLeft[ix];
+            result += intersection - height[ix];
+        }
+        return result;
+    }
+}
