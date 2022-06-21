@@ -1,0 +1,14 @@
+//Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+    public class Solution
+    {
+        public void Rotate(int[] nums, int k)
+        {
+            k = (k > nums.Length) ? (k % nums.Length) : k;
+           
+            Array.Reverse(nums,0,nums.Length);
+            Array.Reverse(nums,0,k);
+            Array.Reverse(nums,k,nums.Length-k);                
+        }
+    }
+
