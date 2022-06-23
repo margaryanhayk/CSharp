@@ -1,0 +1,14 @@
+//Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+public class Solution {
+    public bool ContainsDuplicate(int[] nums) {
+        HashSet<int> setOfNums = new HashSet<int>();
+        foreach(var elem in nums)
+        {
+            if(setOfNums.Contains(elem))
+                return true;
+            setOfNums.Add(elem);            
+        }
+        return false;
+    }
+}
