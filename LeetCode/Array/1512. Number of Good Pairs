@@ -1,0 +1,20 @@
+//Given an array of integers nums, return the number of good pairs.
+//A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+
+public class Solution {
+    public int NumIdenticalPairs(int[] nums) 
+    {
+       int[] container = new int[101];
+       int length = nums.Length;
+       int max = 0;
+       for(int ix = 0; ix < length; ++ix)
+           container[nums[ix]] += 1;
+       
+       for(int ix = 0; ix < 101; ++ix)
+       {
+            if(container[ix] != 0)
+                max += container[ix] * (container[ix] - 1) / 2;
+       }
+       return max;
+    }
+}
