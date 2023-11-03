@@ -1,0 +1,21 @@
+//Given a 0-indexed integer array nums of length n and an integer target, return the number of pairs (i, j) where 0 <= i < j < n and nums[i] + nums[j] < target.
+
+public class Solution 
+{
+    public int CountPairs(IList<int> nums, int target) 
+    {
+        var numsList = new List<int>(nums);
+        numsList.Sort();
+        int count = 0;
+        int left = 0;
+        int right = numsList.Count -1;
+        while(left < right)
+        {
+            if(numsList[left] + numsList[right] < target)
+                count += (right - left++);
+            else
+                --right;
+        }
+        return count;
+    }
+}
