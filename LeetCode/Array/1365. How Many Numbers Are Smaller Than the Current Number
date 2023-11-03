@@ -1,0 +1,22 @@
+//Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it. That is, for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
+//Return the answer in an array.
+
+public class Solution {
+    public int[] SmallerNumbersThanCurrent(int[] nums)
+    {
+        int[] intSet = new int[101];
+        foreach(var el in nums)
+            intSet[el] += 1;
+        int prevSum = 0, currentSum = 0;
+        for(int ix = 0; ix < intSet.Length; ++ix)
+        {
+            currentSum += intSet[ix];
+            intSet[ix] = prevSum;
+            prevSum = currentSum;
+        }    
+        int[] result = new int[nums.Length];
+        for(int ix = 0; ix < result.Length; ++ix)
+            result[ix] = intSet[nums[ix]];    
+        return result;
+    }
+}
