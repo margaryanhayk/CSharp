@@ -1,0 +1,20 @@
+//You are given a 0-indexed integer array nums and an integer k.
+//Return an integer that denotes the sum of elements in nums whose corresponding indices have exactly k set bits in their binary representation.
+//The set bits in an integer are the 1's present when it is written in binary.
+
+public class Solution {
+    public int SumIndicesWithKSetBits(IList<int> nums, int k) 
+    {
+        return nums.Where((x, ix) => CountSetBits(ix) == k).Sum();
+    }
+    public static int CountSetBits(int n)
+    {
+        int counter = 0;
+        while(n != 0)
+        {
+            counter += (n & 1);
+            n >>= 1;
+        }
+        return counter;
+    }
+}
