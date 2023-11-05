@@ -1,0 +1,22 @@
+public class Solution {
+    public int BalancedStringSplit(string s) 
+    {
+       int count = 0;
+       int rCount = 0;
+       int lCount = 0;
+       for(int ix = 0; ix < s.Length; ++ix)
+       {
+            if(s[ix] == 'R')
+                rCount++;
+            else
+                lCount++;
+           if(rCount == lCount)
+           {
+                count++;
+                rCount = 0;
+                lCount = 0;         
+           }
+       }
+       return count; 
+    }
+}
