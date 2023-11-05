@@ -1,0 +1,15 @@
+//You're given strings jewels representing the types of stones that are jewels, and stones representing the stones you have. Each character in stones is a type of stone you have. You want to know how many of the stones you have are also jewels.
+//Letters are case sensitive, so "a" is considered a different type of stone from "A".
+
+public class Solution {
+    public int NumJewelsInStones(string jewels, string stones) 
+    {
+        Dictionary<char, int> stoneCount = new Dictionary<char, int>();
+        foreach(char stone in stones)
+            stoneCount[stone] = stoneCount.ContainsKey(stone) ? stoneCount[stone] + 1 : 1;
+        int jewelCount = 0;
+        foreach(char jewel in jewels)
+            jewelCount += stoneCount.ContainsKey(jewel) ? stoneCount[jewel] : 0;
+        return jewelCount;
+    }
+}
