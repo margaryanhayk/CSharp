@@ -1,0 +1,22 @@
+public class Solution {
+    public string Interpret(string command) 
+    {
+        StringBuilder sb = new StringBuilder();
+        for(int ix = 0; ix < command.Length; ++ix)
+        {
+            if(command[ix] == 'G')
+                sb.Append('G');
+            else if(command[ix] == '(' && command[ix + 1] == ')')
+            {
+                sb.Append('o');
+                ++ix;
+            }
+            else 
+            {
+                sb.Append("al");
+                ix += 3;
+            }
+        }
+        return sb.ToString();
+    }
+}
