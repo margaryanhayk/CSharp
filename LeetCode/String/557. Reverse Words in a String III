@@ -1,0 +1,28 @@
+//Given a string s, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+
+public class Solution {
+    public string ReverseWords(string s) 
+    {
+        List<StringBuilder> sb = new List<StringBuilder>();
+        sb.Add(new StringBuilder());
+        StringBuilder resultBuilder = new StringBuilder();
+        int x = 0;
+        List<int> spaces = new List<int>();
+        for(int ix = s.Length - 1; ix > -1; --ix)
+        {
+            if(s[ix] == ' ')
+            {                
+                sb.Add(new StringBuilder());
+                ++x;
+                spaces.Add(ix);
+            }
+            else
+                sb[x].Append(s[ix]);      
+        }
+        for(int ix = sb.Count() - 1; ix > -1; --ix)
+            resultBuilder.Append(sb[ix]);
+        for(int ix = spaces.Count() - 1; ix > -1; --ix)
+            resultBuilder.Insert(spaces[ix], " ");
+        return resultBuilder.ToString();
+    }
+}
