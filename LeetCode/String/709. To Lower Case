@@ -1,0 +1,14 @@
+//Given a string s, return the string after replacing every uppercase letter with the same lowercase letter.
+
+public class Solution {
+    public string ToLowerCase(string s) 
+    {
+        char[] charArr = s.ToCharArray();
+        for(int ix = 0; ix < charArr.Length; ++ix)
+        {
+            if(charArr[ix] >= 'A' && charArr[ix] <= 'Z')
+                charArr[ix] = (char)(charArr[ix] + 32);
+        }
+        return new string(charArr);
+    }
+}
