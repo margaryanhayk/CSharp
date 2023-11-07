@@ -1,0 +1,18 @@
+You are given a string allowed consisting of distinct characters and an array of strings words. A string is consistent if all characters in the string appear in the string allowed.
+Return the number of consistent strings in the array words.
+
+public class Solution {
+    public int CountConsistentStrings(string allowed, string[] words) 
+    {
+        bool[] container = new bool[26];
+        foreach(char el in allowed)
+            container[el - 'a'] = true;
+        int counter = 0;
+        foreach(string word in words)
+        {
+            if(!word.Any(ix => container[ix - 'a'] == false))
+                ++counter;
+        }
+        return counter;
+    }
+}
