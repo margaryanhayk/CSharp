@@ -1,0 +1,17 @@
+//Given an array of integers nums, return the number of good pairs.
+//A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+
+public class Solution {
+    public int NumIdenticalPairs(int[] nums) 
+    {
+       Dictionary<int,int> container = new Dictionary<int, int>();
+       foreach(var num in nums)
+       {
+            if(container.ContainsKey(num))
+                container[num]++;
+            else
+                container[num] = 1;
+       }
+       return container.Select(x => x.Value * (x.Value - 1) / 2).Sum();
+    }
+}
