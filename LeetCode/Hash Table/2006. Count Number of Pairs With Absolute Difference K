@@ -1,0 +1,22 @@
+//Given an integer array nums and an integer k, return the number of pairs (i, j) where i < j such that |nums[i] - nums[j]| == k.
+//The value of |x| is defined as:
+//x if x >= 0.
+//-x if x < 0.
+
+public class Solution {
+    public int CountKDifference(int[] nums, int k) 
+    {
+        int[] container = new int[301];
+        foreach(var num in nums)
+            ++container[num];
+        int count = 0;
+        for(int ix = 0; ix < 201; ++ix)
+        {
+            if(container[ix] == 0)
+                continue;
+            if(container[ix + k] != 0)
+                count += container[ix] * container[ix + k];
+        }
+        return count;
+    }
+}
