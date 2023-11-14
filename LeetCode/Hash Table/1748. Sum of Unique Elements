@@ -1,0 +1,12 @@
+//You are given an integer array nums. The unique elements of an array are the elements that appear exactly once in the array.
+//Return the sum of all the unique elements of nums.
+
+public class Solution {
+    public int SumOfUnique(int[] nums) 
+    {
+        int[] arr = new int[101];
+        foreach(var num in nums)
+            ++arr[num];
+        return nums.Where(x => arr[x] == 1).Sum();
+    }
+}
