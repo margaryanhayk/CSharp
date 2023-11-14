@@ -15,3 +15,16 @@ public class Solution {
         return result;
     }
 }
+
+public class Solution {
+    public string[] SortPeople(string[] names, int[] heights) 
+    {
+        PriorityQueue<string, int> container = new PriorityQueue<string, int>();
+        for(int ix = 0; ix < names.Length; ++ix)
+            container.Enqueue(names[ix], Int32.MaxValue - heights[ix]);
+        string[] result = new string[names.Length];
+        for(int ix = 0; ix < names.Length; ++ix)
+            result[ix] = container.Dequeue();
+        return result;
+    }
+}
