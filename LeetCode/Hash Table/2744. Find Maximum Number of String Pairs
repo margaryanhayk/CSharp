@@ -23,3 +23,23 @@ public class Solution {
         return container.Count(x => x.Value == true);
     }
 }
+
+
+public class Solution {
+    public int MaximumNumberOfStringPairs(string[] words) 
+    {
+        HashSet<string> set = new HashSet<string>();
+        int counter = 0;
+        foreach(var word in words)
+        {
+            if(set.Contains(word[1].ToString() + word[0].ToString()))
+            {
+                ++counter;
+                set.Remove(word[1].ToString() + word[0].ToString());
+            }
+            else
+                set.Add(word);
+        }
+        return counter;
+    }
+}
