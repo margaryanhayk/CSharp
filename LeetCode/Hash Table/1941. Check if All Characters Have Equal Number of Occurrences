@@ -1,0 +1,20 @@
+//Given a string s, return true if s is a good string, or false otherwise.
+//A string s is good if all the characters that appear in s have the same number of occurrences (i.e., the same frequency).
+
+public class Solution {
+    public bool AreOccurrencesEqual(string s) 
+    {
+        int[] container = new int[26];
+        foreach(char ch in s)
+            ++container[ch - 'a'];
+        var ix = 0;
+        foreach(var el in container)
+        {
+            if (el != 0 && el != ix && ix != 0)
+                return false;
+            else if(el != 0)
+                ix = el;           
+        }
+        return true;
+    }
+}
