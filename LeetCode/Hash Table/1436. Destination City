@@ -1,0 +1,16 @@
+public class Solution {
+    public string DestCity(IList<IList<string>> paths) 
+    {
+        var x = new HashSet<string>();
+        foreach(var ix in paths)
+            x.Add(ix[0]);
+        foreach(var ix in paths)
+        {
+            if(!x.Contains(ix[0]))
+                return ix[0];
+            else if(!x.Contains(ix[1]))
+                return ix[1];
+        }
+        return null;
+    }
+}
