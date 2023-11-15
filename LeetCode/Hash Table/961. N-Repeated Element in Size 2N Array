@@ -1,0 +1,18 @@
+//You are given an integer array nums with the following properties:
+//nums.length == 2 * n.
+//nums contains n + 1 unique elements.
+//Exactly one element of nums is repeated n times.
+//Return the element that is repeated n times.
+
+public class Solution {
+    public int RepeatedNTimes(int[] nums) 
+    {
+        HashSet<int> container = new HashSet<int>();
+        foreach(var num in nums)
+        {
+            if(container.Add(num) == false)
+                return num;
+        }
+        return -1;
+    }
+}
