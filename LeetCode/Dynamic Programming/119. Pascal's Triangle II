@@ -1,0 +1,28 @@
+//Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+//In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
+
+public class Solution {
+    public IList<int> GetRow(int rowIndex) 
+    {
+        var result = new List<int>();
+        for (int ix = 0; ix <= rowIndex; ++ix)
+            result.Add(0);
+        for (int ix = 0; ix <= rowIndex; ++ix)
+        {
+            int current = 1;
+            int previous = 1;
+            for (int i = 0; i <= ix; ++i)
+            {
+                if (i == 0 || i == ix)
+                    result[i] = 1;
+                else
+                {
+                    current = result[i];
+                    result[i] = current + previous;
+                    previous = current;
+                }
+            }
+        }
+        return result; 
+    }
+}
