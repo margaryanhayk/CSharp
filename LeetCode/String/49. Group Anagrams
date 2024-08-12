@@ -1,0 +1,33 @@
+//Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+//An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+public class Solution {
+    public IList<IList<string>> GroupAnagrams(string[] strs)
+    {
+        int[] primeNumbers = 
+        {
+            2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47,
+            53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101
+        };
+        Dictionary<BigInteger, List<string>> container = new Dictionary<BigInteger, List<string>>();
+
+        foreach (var str in strs) 
+        {
+            BigInteger hash = GetUniqueHash(str, primeNumbers);
+            if(container.ContainsKey(hash))
+                container[hash].Add(str);
+            else
+                container[hash] = new List<string>() { str};
+        }
+        return new List<IList<string>>(container.Values);
+
+    }
+
+    private  BigInteger GetUniqueHash(string str, int[] primeNumbers)
+    {
+        BigInteger result = 1;
+        foreach(int i in str) 
+            result *= primeNumbers[i - 'a'];
+        return result;
+    }
+}
