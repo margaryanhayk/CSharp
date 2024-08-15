@@ -5,14 +5,13 @@
 public class Solution {
     public int[] TwoSum(int[] nums, int target) 
     {
-        Dictionary<int, int> container = new Dictionary<int, int>();
-        for(int ix = 0; ix < nums.Length; ++ix)
+        Dictionary<int, int> cnt = new Dictionary<int,int>();
+        for (int ix = 0; ix < nums.Length; ++ix)
         {
-            if(container.ContainsKey(target - nums[ix]))
-                return new int[]{ix, container[target - nums[ix]]};
-            else if(!container.ContainsKey(nums[ix]))
-                container.Add(nums[ix], ix);
-        }    
+            if(cnt.ContainsKey(target - nums[ix]))
+                return new int[]{cnt[target - nums[ix]], ix};
+            cnt.TryAdd(nums[ix], ix);
+        }
         return null;
     }
 }
