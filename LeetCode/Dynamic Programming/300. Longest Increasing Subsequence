@@ -1,0 +1,48 @@
+//Given an integer array nums, return the length of the longest strictly increasing 
+
+// *** O(nLogN) *** //
+public class Solution 
+{
+    public int LengthOfLIS(int[] nums)
+    {
+        List<int> tails = new List<int>();
+        foreach(var num in nums)
+        {
+            int left = 0;
+            int right = tails.Count;
+            while (left < right)
+            {
+                int mid = (left + right) / 2;
+                if (tails[mid] >= num)
+                    right = mid;
+                else
+                    left = mid + 1;
+            }
+            if(left == tails.Count)
+                tails.Add(num);
+            else
+                tails[left] = num;
+        }
+        return tails.Count();
+    }
+}
+
+// *** Dynamic Programming O(n2) *** //
+public class Solution 
+{
+    public int LengthOfLIS(int[] nums)
+    {
+        int[] maxLengths = Enumerable.Repeat(1, nums.Length).ToArray();
+        for (int ix = 1; ix < nums.Length; ++ix)
+        {
+            int max = 1;
+            for(int x = ix - 1; x >= 0; --x)
+            {
+                if(nums[x] < nums[ix])
+                    max = Math.Max(max, maxLengths[x] + 1);
+            }
+            maxLengths[ix] = max;
+        }
+        return maxLengths.Max();
+    }
+}
