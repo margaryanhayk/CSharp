@@ -1,0 +1,55 @@
+//Given the root of a binary tree, return the preorder traversal of its nodes' values.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+**************ITERATIVE SOLUTION****************
+public class Solution 
+{
+    List<int> result = new List<int>();
+    public IList<int> PreorderTraversal(TreeNode root) 
+    {
+        Stack<TreeNode> cnt = new Stack<TreeNode>();
+        List<int> result = new List<int>();
+        while(cnt.Count != 0 || root != null)
+        {
+            if(root != null)
+            {
+                result.Add(root.val);
+                cnt.Push(root);
+                root = root.left;
+            }
+            else
+                root = cnt.Pop().right;
+        }
+        return result;
+    }
+}
+
+
+**************RECURSIVE SOLUTION****************
+public class Solution 
+{
+    List<int> result = new List<int>();
+    public IList<int> PreorderTraversal(TreeNode root) 
+    {
+        if(root != null)
+        {
+            result.Add(root.val);
+            PreorderTraversal(root.left);
+            PreorderTraversal(root.right);
+        }
+        return result;
+    }
+}
