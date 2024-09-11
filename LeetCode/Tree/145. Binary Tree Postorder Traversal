@@ -1,0 +1,63 @@
+//Given the root of a binary tree, return the postorder traversal of its nodes' values.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+**************ITERATIVE SOLUTION****************
+public class Solution 
+{
+    public IList<int> PostorderTraversal(TreeNode root) 
+    {
+        List<int> result = new List<int>();
+        Stack<TreeNode> processCnt = new Stack<TreeNode>();
+        Stack<int> readReverse = new Stack<int>();
+        if(root != null)
+            processCnt.Push(root);
+        while(processCnt.Count != 0)
+        {
+            TreeNode node = processCnt.Pop();
+            readReverse.Push(node.val);
+            if(node.left != null)
+                processCnt.Push(node.left);
+            if(node.right != null)
+                processCnt.Push(node.right);
+        }
+        while(readReverse.Count != 0)
+            result.Add(readReverse.Pop());
+        return result;
+    }
+}
+
+**************RECURSIVE SOLUTION****************
+public class Solution 
+{
+    public IList<int> PostorderTraversal(TreeNode root) 
+    {
+        List<int> result = new List<int>();
+        PostorderTraversalRecursive(root, result);
+        return result;
+    }
+
+    private void PostorderTraversalRecursive(TreeNode node, List<int> result)
+    {
+        if (node != null)
+        {
+            PostorderTraversalRecursive(node.left, result);
+            PostorderTraversalRecursive(node.right, result);
+            result.Add(node.val);
+        }
+    }
+}
+
+
