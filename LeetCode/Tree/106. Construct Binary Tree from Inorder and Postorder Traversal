@@ -1,0 +1,49 @@
+//Given two integer arrays inorder and postorder where inorder is the inorder traversal of a binary tree and 
+//postorder is the postorder traversal of the same tree, construct and return the binary tree.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BuildTree(int[] inorder, int[] postorder)
+    {
+        if(!inorder.Any())
+            return null;
+        return BuildTree(inorder.ToList(), postorder.ToList());
+         
+    }
+    public TreeNode BuildTree(List<int> inorder, List<int> postorder)
+    {
+        TreeNode node = new TreeNode(postorder[postorder.Count() - 1]);
+
+        int inOrderStartingIndex = inorder.IndexOf(node.val);
+        if(inOrderStartingIndex == -1)
+            return null;
+        
+        List<int> left = new List<int>();
+        List<int> right = new List<int>();
+        for(int ix = 0; ix < inOrderStartingIndex; ++ix)
+            left.Add(inorder[ix]);
+        for(int ix = inOrderStartingIndex + 1; ix < inorder.Count(); ++ix)
+            right.Add(inorder[ix]);
+        
+        postorder.Remove(node.val);
+
+        if(right.Any())
+            node.right = BuildTree(right, postorder);
+        if(left.Any())
+            node.left = BuildTree(left, postorder);
+        
+        return node;
+    }
+}
