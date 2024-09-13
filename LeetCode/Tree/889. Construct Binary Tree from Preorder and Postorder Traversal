@@ -1,0 +1,48 @@
+//Given two integer arrays, preorder and postorder where preorder is the preorder traversal of a 
+//binary tree of distinct values and postorder is the postorder traversal of the same tree, reconstruct and return the binary tree.
+//If there exist multiple answers, you can return any of them.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution
+{
+    public TreeNode ConstructFromPrePost(int[] preorder, int[] postorder)
+    {
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        for (int ix = 0; ix < postorder.Length; ++ix)
+            dict[postorder[ix]] = ix;
+
+        return Construct(preorder, 0, preorder.Length - 1, postorder, 0, postorder.Length - 1, dict);
+    }
+
+    public TreeNode Construct(int[] preorder, int preStart, int preEnd,
+           int[] postorder, int postStart, int postEnd, Dictionary<int, int> dict)
+    {
+        if (preStart > preEnd || postStart > postEnd)
+            return null;
+
+        TreeNode root = new TreeNode(preorder[preStart]);
+
+        if (preStart == preEnd || postStart == postEnd)
+            return root;
+
+        int nextRootIndex = dict[preorder[preStart + 1]];
+        int leftTreeSize = nextRootIndex - postStart + 1;
+
+        root.left = Construct(preorder, preStart + 1, preStart + leftTreeSize, postorder, postStart, nextRootIndex, dict);
+        root.right = Construct(preorder, preStart + leftTreeSize + 1, preEnd, postorder, nextRootIndex  + 1, postEnd - 1, dict);
+
+        return root;
+    }
+}
