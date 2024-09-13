@@ -1,0 +1,50 @@
+//Given an array of integers preorder, which represents the preorder traversal of a BST (i.e., binary search tree), construct the tree and return its root.
+//It is guaranteed that there is always possible to find a binary search tree with the given requirements for the given test cases.
+//A binary search tree is a binary tree where for every node, any descendant of Node.left has a value strictly less than Node.val, and any descendant of Node.right has a value strictly greater than Node.val.
+//A preorder traversal of a binary tree displays the value of the node first, then traverses Node.left, then traverses Node.right.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public TreeNode BstFromPreorder(int[] preorder)
+    {
+        if (preorder.Length == 0)
+            return null;
+        return Construct(preorder, 0, preorder.Length - 1);
+    }
+
+    private TreeNode Construct(int[] preorder, int start, int end)
+    {
+        if (start > end)
+            return null;
+        
+        TreeNode node = new TreeNode(preorder[start]);
+        if (start == end)
+            return node;
+
+        int leftEnd = start;
+        for(int ix = start + 1; ix <= end; ++ix)
+        {
+            if (node.val > preorder[ix])
+                leftEnd = ix;
+            else
+                break;
+        }
+
+        node.left = Construct(preorder, start + 1, leftEnd);
+        node.right = Construct(preorder, leftEnd + 1, end);
+
+        return node;
+    }
+}
