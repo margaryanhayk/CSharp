@@ -1,0 +1,45 @@
+//Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution
+{
+    public IList<int> RightSideView(TreeNode root)
+    {
+        List<int> result = new List<int>();
+        if (root == null)
+            return result;
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        List<List<int>> bigList = new List<List<int>>();
+        while(queue.Count > 0)
+        {
+            List<int> level = new List<int>();
+            int size = queue.Count();
+            for(int ix = 0; ix < size; ++ix)
+            {
+                TreeNode curr = queue.Dequeue();
+                level.Add(curr.val);
+                if(curr.left != null)
+                    queue.Enqueue(curr.left);
+                if (curr.right != null)
+                    queue.Enqueue(curr.right);
+            }
+            bigList.Add(level);
+        }
+        foreach (var el in bigList)
+            result.Add(el.Last());
+        return result;
+    }
+}
