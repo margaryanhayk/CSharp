@@ -16,35 +16,24 @@
  *     }
  * }
  */
-public class Solution {
+public class Solution 
+{
     public TreeNode BstFromPreorder(int[] preorder)
     {
-        if (preorder.Length == 0)
+        if (!preorder.Any())
             return null;
-        return Construct(preorder, 0, preorder.Length - 1);
+        return ConstructFromPreorder(preorder, 0, preorder.Length - 1);
     }
-
-    private TreeNode Construct(int[] preorder, int start, int end)
+    private TreeNode ConstructFromPreorder(int[] preorder, int start, int end)
     {
-        if (start > end)
+        if (start > end || end > preorder.Length - 1)
             return null;
-        
-        TreeNode node = new TreeNode(preorder[start]);
-        if (start == end)
-            return node;
-
-        int leftEnd = start;
-        for(int ix = start + 1; ix <= end; ++ix)
-        {
-            if (node.val > preorder[ix])
-                leftEnd = ix;
-            else
-                break;
-        }
-
-        node.left = Construct(preorder, start + 1, leftEnd);
-        node.right = Construct(preorder, leftEnd + 1, end);
-
-        return node;
+        TreeNode root = new TreeNode(preorder[start]);
+        int ix = start + 1;
+        while(ix <= end && preorder[ix] < preorder[start])
+            ++ix;
+        root.left = ConstructFromPreorder(preorder, start + 1, ix - 1);
+        root.right = ConstructFromPreorder(preorder, ix, end);
+        return root;
     }
 }
