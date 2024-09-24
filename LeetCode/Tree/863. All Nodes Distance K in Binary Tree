@@ -1,0 +1,66 @@
+//Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
+//You can return the answer in any order.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution 
+{
+    public IList<int> DistanceK(TreeNode root, TreeNode target, int k)
+    {
+        Dictionary<TreeNode, TreeNode> parentMap = new Dictionary<TreeNode, TreeNode> ();
+        DFS(root, null, parentMap);
+        return BFS(target, k, parentMap);
+    }
+
+    private List<int> BFS(TreeNode target, int k, Dictionary<TreeNode, TreeNode> parentMap)
+    {
+        List<int> result = new List<int>();
+        if (target == null)
+            return result;
+        HashSet<int> visited = new HashSet<int>();  
+        Queue<TreeNode> queue = new Queue<TreeNode> ();
+        queue.Enqueue(target);
+        visited.Add(target.val);
+        int depth = 0;
+        while(queue.Count > 0) 
+        {
+            if(depth == k)
+            {
+                while (queue.Count > 0)
+                    result.Add(queue.Dequeue().val);
+                return result;
+            }
+            int levelSize = queue.Count;
+            for(int ix = 0; ix < levelSize; ++ix)
+            {
+                TreeNode node = queue.Dequeue();
+
+                if (node.left != null && visited.Add(node.left.val))
+                    queue.Enqueue (node.left);
+                if (node.right != null && visited.Add(node.right.val))
+                    queue.Enqueue(node.right);
+                if (parentMap.ContainsKey(node) && parentMap[node] != null && visited.Add(parentMap[node].val))
+                    queue.Enqueue(parentMap[node]);
+            }
+            ++depth;
+        }
+        return result;
+    }
+
+    public void DFS(TreeNode root, TreeNode parent, Dictionary<TreeNode, TreeNode> parentMap)
+    {
+        if (root == null)
+            return;
+        if(parent != null)
+            parentMap.Add(root, parent);
+        DFS(root.left, root, parentMap);
+        DFS(root.right, root, parentMap);
+    }
+}
