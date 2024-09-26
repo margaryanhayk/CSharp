@@ -3,6 +3,20 @@
 //connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 //Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
+public class Solution 
+{
+    public int Rob(int[] nums)
+    {
+        if(!nums.Any())
+            return 0;
+        if (nums.Length > 1)
+            nums[1] = Math.Max(nums[0], nums[1]);
+        for (int ix = 2; ix < nums.Length; ++ix)
+            nums[ix] = Math.Max((nums[ix] + nums[ix - 2]), nums[ix - 1]);
+        return nums[nums.Length - 1];
+    }
+}
+
 public class Solution {
     public int Rob(int[] nums) 
     {
