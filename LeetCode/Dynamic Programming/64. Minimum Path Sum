@@ -1,0 +1,25 @@
+//Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+//Note: You can only move either down or right at any point in time.
+
+public class Solution 
+{
+    public int MinPathSum(int[][] grid)
+    {
+        int n = grid[0].Length;
+        int m = grid.Length;
+        int[,] dp = new int[m, n];
+
+        dp[0,0] = grid[0][0];
+
+        for (int ix = 1; ix < n; ++ix)
+            dp[0,ix] = grid[0][ix] + dp[0,ix - 1];
+        for (int ix = 1; ix < m; ++ix)
+            dp[ix, 0] = grid[ix][0] + dp[ix - 1,0];
+        for (int ix = 1; ix < m; ++ix)
+        {
+            for(int iy = 1; iy < n; ++iy)
+                dp[ix, iy] = grid[ix][iy] + Math.Min(dp[ix-1,iy], dp[ix,iy-1]);
+        }
+        return dp[m-1, n-1];
+    }
+}
