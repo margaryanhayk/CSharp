@@ -1,0 +1,22 @@
+//Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+//The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+//You must write an algorithm that runs in O(n) time and without using the division operation.
+
+public class Solution 
+{
+    public int[] ProductExceptSelf(int[] nums) 
+    {
+        int[] first = new int[nums.Length];
+        int[] result = new int[nums.Length];
+        first[0] = 1;
+        result[nums.Length - 1] = 1;
+
+        for(int ix = 1; ix < nums.Length; ++ix)
+            first[ix] = first[ix -1] * nums[ix - 1];
+        for(int ix = nums.Length - 2; ix > -1; --ix)
+            result[ix] = result[ix + 1] * nums[ix + 1];
+        for(int ix = 0; ix < nums.Length; ++ix)
+            result[ix] *= first[ix];
+        return result;
+    }
+}
