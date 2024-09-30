@@ -1,0 +1,23 @@
+//Given an integer array nums and an integer k, return the kth largest element in the array.
+//Note that it is the kth largest element in the sorted order, not the kth distinct element.
+//Can you solve it without sorting?
+
+public class Solution 
+{
+    public int FindKthLargest(int[] nums, int k)
+    {
+        PriorityQueue<int, int> minHeap = new PriorityQueue<int, int>();
+
+        for (int ix = 0; ix < nums.Length; ++ix)
+        {
+            if (minHeap.Count < k)
+                minHeap.Enqueue(nums[ix], nums[ix]);
+            else if (nums[ix] > minHeap.Peek())
+            {
+                minHeap.Dequeue();
+                minHeap.Enqueue(nums[ix], nums[ix]);
+            }
+        }
+        return minHeap.Peek();
+    }
+}
