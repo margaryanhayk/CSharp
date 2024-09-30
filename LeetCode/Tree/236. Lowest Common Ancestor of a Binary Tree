@@ -32,3 +32,44 @@ public class Solution
         return null;
     }
 }
+
+
+public class Solution 
+{
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        if (root == null)
+            return null;
+        Dictionary<TreeNode, TreeNode> parentDict = new Dictionary<TreeNode, TreeNode>();
+        DFSTraverse(root, null, parentDict);
+        List<TreeNode> pList = new List<TreeNode>();
+        List<TreeNode> qList = new List<TreeNode>();
+        while (p != null)
+        {
+            pList.Add(p);
+            p = parentDict[p];
+        }
+        while (q != null)
+        {
+            qList.Add(q);
+            q = parentDict[q];
+        }
+        foreach(var el in qList) 
+        {
+            if(pList.Contains(el))
+                return el;
+        }
+        return null;
+    }
+
+    private void DFSTraverse(TreeNode root, TreeNode parent, Dictionary<TreeNode, TreeNode> parentDict)
+    {
+        if (root == null)
+            return;
+        if (!parentDict.ContainsKey(root))
+            parentDict.Add(root, parent);
+        DFSTraverse(root.left, root, parentDict);
+        DFSTraverse(root.right, root, parentDict);
+        return;
+    }
+}
