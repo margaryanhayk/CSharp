@@ -1,0 +1,75 @@
+//Design a data structure that supports adding new words and finding if a string matches any previously added string.
+//Implement the WordDictionary class:
+//WordDictionary() Initializes the object.
+//void addWord(word) Adds word to the data structure, it can be matched later.
+//bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. word may contain dots '.' where dots can be matched with any letter.
+
+    public class WordDictionary
+    {
+        public class DictNode
+        {
+            public bool IsLastElement { get; set; }
+            public DictNode[] Childs {  get; set; }
+            
+            public DictNode()
+            {
+                IsLastElement = false;
+                Childs = new DictNode[26];
+            }
+        }
+
+        private readonly DictNode root;
+
+        public WordDictionary()
+        {
+            root = new DictNode();
+        }
+
+        public void AddWord(string word)
+        {
+            DictNode node = root;
+            for(int ix = 0; ix < word.Length; ++ix)
+            {
+                int index = word[ix] - 'a';
+                if (node.Childs[index] == null)
+                    node.Childs[index] = new DictNode();
+                node = node.Childs[index];
+            }
+            node.IsLastElement = true;
+        }
+        public bool Search(string word)
+        {
+            DictNode node = root;
+            return Search(node, word, 0);
+        }
+
+        private bool Search(DictNode node, string word, int index)
+        {
+            if (index == word.Length)
+                return node != null && node.IsLastElement;
+            if (node == null)
+                return false;
+
+            if (word[index] == '.')
+            {
+                List<DictNode> possibleNodes = node.Childs.Where(child => child != null).ToList();
+                List<bool> results = new List<bool>();
+                foreach (var el in possibleNodes)
+                    results.Add(Search(el, word, index + 1));
+                if(results.Any(b => b == true))
+                    return true;
+            }
+            else
+            {
+                int charIndex = word[index] - 'a';
+                if (node.Childs[charIndex] == null)
+                    return false;
+                node = node.Childs[charIndex];
+                ++index;
+                if (index == word.Length)
+                    return node.IsLastElement;
+                return Search(node, word, index);
+            }
+            return false;
+        }
+    }
