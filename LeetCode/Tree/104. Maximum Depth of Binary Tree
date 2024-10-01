@@ -14,6 +14,9 @@
  *     }
  * }
  */
+
+////////////////ITERATIVE SOLUTION ///////////////////
+
 public class Solution 
 {
     public int MaxDepth(TreeNode root)
@@ -39,3 +42,14 @@ public class Solution
         return maxDepth;
     }
 }
+
+////////////////RECURSIVE SOLUTION ///////////////////
+    public int MaxDepth(TreeNode root)
+    {
+        if(root == null)
+            return 0;
+        int leftLength = MaxDepth(root.left);
+        int rightLength = MaxDepth(root.right);
+        return Math.Max(leftLength, rightLength) + 1;
+    }
+///////////////////////////////////////////////////////
