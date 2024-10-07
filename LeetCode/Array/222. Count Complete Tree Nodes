@@ -1,0 +1,45 @@
+//Given the root of a complete binary tree, return the number of the nodes in the tree.
+//According to Wikipedia, every level, except possibly the last, is completely filled in a complete 
+//binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2h nodes inclusive at the last level h.
+//Design an algorithm that runs in less than O(n) time complexity.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution 
+{
+    public int CountNodes(TreeNode root) 
+    {
+        if (root == null)
+            return 0;
+        int count = 0;
+        Queue<TreeNode> queue = new Queue<TreeNode>();
+        queue.Enqueue(root);
+        while (queue.Count() != 0)
+        {
+            int size = queue.Count();
+            for (int ix = 0; ix < size; ++ix)
+            {
+                var node = queue.Dequeue();
+                ++count;
+                if (node.left != null)
+                {
+                    queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
+                }
+            }
+        }
+        return count;          
+    }
+}
