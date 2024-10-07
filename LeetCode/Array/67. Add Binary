@@ -1,0 +1,32 @@
+//Given two binary strings a and b, return their sum as a binary string.
+
+public class Solution 
+{
+    public string AddBinary(string a, string b)
+    {
+        StringBuilder sb = new StringBuilder();
+        int ix = a.Length - 1;
+        int bx = b.Length - 1;
+        int qerry = 0;
+        int sum = 0;
+        while(ix >= 0 || bx >= 0 || qerry != 0)
+        {
+            sum = qerry;
+            if(ix >= 0)
+            {
+                sum += (a[ix] - '0');
+                --ix;
+            }
+            if (bx >= 0)
+            {
+                sum += (b[bx] - '0');
+                --bx;
+            }
+            sb.Append(sum % 2);
+            qerry = sum / 2;
+        }
+        char[] arr = sb.ToString().ToCharArray();
+        Array.Reverse(arr);
+        return new string(arr);
+    }
+}
