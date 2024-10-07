@@ -16,6 +16,19 @@
  *     }
  * }
  */
+
+
+///////////////RECURSIVE SOLUTION////////////////////
+public class Solution 
+{
+    public int CountNodes(TreeNode root) 
+    {
+            if (root == null) 
+                return 0;
+            return CountNodes(root.left) + CountNodes(root.right) + 1;
+    }
+}
+/////////////////////////////////////////////////////
 public class Solution 
 {
     public int CountNodes(TreeNode root) 
@@ -43,3 +56,5 @@ public class Solution
         return count;          
     }
 }
+
+
