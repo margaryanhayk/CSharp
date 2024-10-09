@@ -1,0 +1,13 @@
+//Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+public class Solution 
+{
+    public int MissingNumber(int[] nums)
+    {
+        int sum = (nums.Length * (nums.Length + 1)) / 2;
+        int realSum = 0;
+        foreach (var num in nums)
+            realSum += num;
+        return sum - realSum;    
+    }
+}
