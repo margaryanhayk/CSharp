@@ -1,0 +1,39 @@
+//Given the root of a Binary Search Tree (BST), return the minimum absolute difference between the values of any two different nodes in the tree.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ 
+public class Solution 
+{
+    public int GetMinimumDifference(TreeNode root)
+    {
+        if (root == null)
+            return 0;
+        int difference = int.MaxValue;
+        TreeNode tmp = new TreeNode(int.MaxValue);
+        Inorder(root, tmp, ref difference);
+        return difference;
+    }
+
+    private void Inorder(TreeNode root, TreeNode tmp, ref int difference)
+    {
+        if (root == null)
+            return;
+        Inorder(root.left, tmp, ref difference);
+        if (tmp.val != int.MaxValue)
+            difference = Math.Min(difference, Math.Abs(tmp.val - root.val));
+        tmp.val = root.val;
+        Inorder(root.right, tmp, ref difference);
+    }
+}
