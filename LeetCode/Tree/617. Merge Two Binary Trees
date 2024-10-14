@@ -1,0 +1,41 @@
+//You are given two binary trees root1 and root2.
+//Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to
+//merge the two trees into a new binary tree. The merge rule is that if two nodes values up as the new value of the merged node. 
+//therwise, the NOT null node will be used as the node of the new tree.
+//Return the merged tree.
+
+//Note: The merging process must start from the root nodes of both trees.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution 
+{
+    public TreeNode MergeTrees(TreeNode root1, TreeNode root2)
+    {
+        if (root1 == null && root2 == null)
+            return null;
+        return Merge(root1, root2);
+    }
+    private TreeNode Merge(TreeNode node1, TreeNode node2)
+    {
+        if (node1 == null)
+            return node2;
+        if (node2 == null)
+            return node1;
+        TreeNode result = new TreeNode(node1.val + node2.val);
+        result.left = Merge(node1.left, node2.left);
+        result.right = Merge(node1.right, node2.right);
+        return result;
+    }
+}
