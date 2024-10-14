@@ -1,0 +1,44 @@
+//Given the root of a binary search tree and an integer k, return true if there exist two elements in the BST such that their sum is equal to k, or false otherwise.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution 
+{
+    public bool FindTarget(TreeNode root, int k) 
+    {
+        List<int> seq = new List<int>();
+        Inorder(root, seq);
+        int left = 0;
+        int right = seq.Count() - 1;
+        while(left < right)
+        {
+            int sum = seq[left] + seq[right];
+            if(sum == k)
+                return true;
+            if(sum > k)
+                --right;
+            else
+                ++left;
+        }
+        return false;
+    }
+    private void Inorder(TreeNode node, List<int> seq)
+    {
+        if(node == null)
+            return;
+        Inorder(node.left, seq);
+        seq.Add(node.val);
+        Inorder(node.right, seq);
+    }
+}
