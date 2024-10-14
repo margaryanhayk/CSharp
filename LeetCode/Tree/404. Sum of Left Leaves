@@ -1,0 +1,36 @@
+//Given the root of a binary tree, return the sum of all left leaves.
+//A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution 
+{
+    public int SumOfLeftLeaves(TreeNode root) 
+    {
+        if(root == null)
+            return 0;
+        int sum = 0;
+        return SumOfLeftLeaves(root, ref sum);
+    }
+    private int SumOfLeftLeaves(TreeNode root,ref int sum)
+    {
+        if(root == null)
+            return 0;
+        if(root.left != null && root.left.left == null && root.left.right == null )
+            sum += root.left.val;
+        SumOfLeftLeaves(root.left,ref sum);
+        SumOfLeftLeaves(root.right,ref sum);
+        return sum;
+    }
+}
