@@ -1,0 +1,32 @@
+//Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+//The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+public class Solution 
+{
+    public bool Exist(char[][] board, string word)
+    {
+        for(int ix = 0; ix < board.Length; ++ix) 
+            for(int iy = 0; iy < board[0].Length; ++iy)
+                if(DFS(board, ix, iy, 0, word))
+                    return true;
+        return false;
+    }
+
+    private bool DFS(char[][] board,  int ix, int iy, int index, string word)
+    {
+        if (index == word.Length)
+            return true;
+        if ( ix < 0 || iy < 0 
+           || ix >= board.Length || iy >= board[0].Length
+           || index > word.Length || board[ix][iy] != word[index])
+            return false;
+        char temp = board[ix][iy];
+        board[ix][iy] = '*';
+        bool found = DFS(board, ix - 1, iy, index + 1, word) 
+            || DFS(board, ix + 1, iy, index + 1, word) 
+            || DFS(board, ix, iy - 1, index + 1, word) 
+            || DFS(board, ix, iy + 1, index + 1, word);
+        board[ix][iy] = temp;
+        return found;
+    }
+}
