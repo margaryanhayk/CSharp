@@ -1,0 +1,41 @@
+//You are given row x col grid representing a map where grid[i][j] = 1 represents land and grid[i][j] = 0 represents water.
+//Grid cells are connected horizontally/vertically (not diagonally). The grid is completely surrounded by water, 
+//and there is exactly one island (i.e., one or more connected land cells).
+//The island doesn't have "lakes", meaning the water inside isn't connected to the water around the island. 
+//One cell is a square with side length 1. The grid is rectangular, width and height don't exceed 100. Determine the perimeter of the island.
+
+public class Solution 
+{
+    public int IslandPerimeter(int[][] grid) 
+    {
+        int m = grid.Length;
+        int n = grid[0].Length;
+        int perimeter = 0;
+        for(int ix = 0; ix < m; ++ix)
+            for(int iy = 0; iy < n; ++iy)
+                if(grid[ix][iy] == 1)
+                    perimeter += CalculatePerimeterForCell(grid, ix, iy);
+        return perimeter;       
+    }
+    private int CalculatePerimeterForCell(int[][] grid, int ix, int iy)
+    {
+        int res = 0;
+        if(ix + 1 < grid.Length)
+            res += grid[ix + 1][iy] == 0 ? 1 : 0;
+        else
+            res += 1;
+        if(ix - 1 >= 0)
+            res += grid[ix - 1][iy] == 0 ? 1 : 0;
+        else
+            res += 1;
+        if(iy + 1 < grid[0].Length)
+            res += grid[ix][iy + 1] == 0 ?  1 : 0;
+        else
+            res += 1;
+        if(iy - 1 >= 0)
+            res += grid[ix][iy - 1] == 0 ?  1 : 0;
+        else
+            res += 1;
+        return res;
+    }
+}
