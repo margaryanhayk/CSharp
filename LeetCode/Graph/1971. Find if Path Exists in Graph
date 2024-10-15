@@ -1,0 +1,45 @@
+//There is a bi-directional graph with n vertices, where each vertex is labeled from 0 to n - 1 (inclusive). The edges in the graph are represented as a 
+//2D integer array edges, where each edges[i] = [ui, vi] denotes a bi-directional
+//edge between vertex ui and vertex vi. Every vertex pair is connected by at most one edge, and no vertex has an edge to itself.
+//You want to determine if there is a valid path that exists from vertex source to vertex destination.
+
+//Given edges and the integers n, source, and destination, return true if there is a valid path from source to destination, or false otherwise.
+
+public class Solution 
+{
+    public bool ValidPath(int n, int[][] edges, int source, int destination)
+    {
+        if (source == destination)
+            return true;
+        List<int>[] graph = new List<int>[n];
+        for (int ix = 0; ix < n; ++ix)
+            graph[ix] = new List<int>();
+        foreach (var edge in edges)
+        {
+            graph[edge[0]].Add(edge[1]);
+            graph[edge[1]].Add(edge[0]);
+        }
+
+        Queue<int> queue = new Queue<int>();
+        bool[] visited = new bool[n];
+
+        queue.Enqueue(source);
+        visited[source] = true;
+
+        while (queue.Any())
+        {
+            int top = queue.Dequeue();
+            if (top == destination)
+                return true;
+            for (int ix = 0; ix < graph[top].Count; ++ix)
+            {
+                if (!visited[graph[top][ix]])
+                {
+                    visited[graph[top][ix]] = true;
+                    queue.Enqueue(graph[top][ix]);
+                }
+            }
+        }
+        return false;
+    }
+}
