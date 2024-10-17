@@ -1,0 +1,63 @@
+//You have a lock in front of you with 4 circular wheels. Each wheel has 10 slots: '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'.
+//The wheels can rotate freely and wrap around: for example we can turn '9' to be '0', or '0' to be '9'. Each move consists of turning one wheel one slot.
+//The lock initially starts at '0000', a string representing the state of the 4 wheels.
+//You are given a list of deadends dead ends, meaning if the lock displays any of these codes, the wheels of the lock will stop turning and you will be unable to open it.
+//Given a target representing the value of the wheels that will unlock the lock, return the minimum total number of turns required to open the lock, or -1 if it is impossible.
+
+public class Solution 
+{
+    public int OpenLock(string[] deadends, string target)
+    {
+        string initialState = "0000";
+        HashSet<string> deadendsHash = new HashSet<string>(deadends);
+        HashSet<string> visited = new HashSet<string>();
+        Queue<string> states = new Queue<string>();
+
+        if (deadendsHash.Contains(initialState))
+            return -1;
+        if (target == initialState)
+            return 0;
+
+        states.Enqueue(initialState);
+        visited.Add(initialState);
+        int depth = 0;
+        while (states.Any())
+        {
+            int size = states.Count();
+            for (int ix = 0; ix < size; ++ix)
+            {
+                var currentState = states.Dequeue();
+                if (currentState == target)
+                    return depth;
+                foreach(var next in GetAllPossibleStates(deadendsHash, visited, currentState))
+                {
+                    states.Enqueue(next);
+                    visited.Add(next);
+                }
+            }
+            ++depth;
+        }
+        return -1;
+    }
+
+    private List<string> GetAllPossibleStates(HashSet<string> deadends, HashSet<string> visited, string currentState)
+    {
+        var states = new List<string>();
+        char[] currentArray = currentState.ToCharArray();
+        for (int i = 0; i < 4; i++)
+        {
+            char originalChar = currentArray[i];
+
+            char newChar = originalChar == '9' ? '0' : (char)(originalChar + 1);
+            currentArray[i] = newChar;
+            states.Add(new string(currentArray));
+
+            newChar = originalChar == '0' ? '9' : (char)(originalChar - 1);
+            currentArray[i] = newChar;
+            states.Add(new string(currentArray));
+
+            currentArray[i] = originalChar;
+        }
+        return states.Where(y => !deadends.Contains(y) && !visited.Contains(y)).ToList();
+    }
+}
