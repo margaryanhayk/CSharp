@@ -39,3 +39,27 @@ public class Solution
         return root.val + Math.Max(maxLeftPositive, maxRightPositive);  
     }
 }
+
+**********************another day, another way...*****************************
+public class Solution 
+{
+    public int MaxPathSum(TreeNode root)
+    {
+        if(root == null)
+            return 0;
+        int maxSum = int.MinValue;
+        MaxPathSumRex(root, ref maxSum);
+        return maxSum;
+    }
+    private int MaxPathSumRex(TreeNode root, ref int maxSum)
+    {
+        if (root == null)
+            return 0;
+        int left = MaxPathSumRex(root.left, ref maxSum);
+        int right = MaxPathSumRex(root.right, ref maxSum);
+        var rootVal = root.val;
+        root.val = Math.Max(Math.Max(left + root.val, right + root.val), root.val);
+        maxSum = Math.Max(maxSum, Math.Max(root.val, left + right + rootVal));
+        return root.val;
+    }
+}
