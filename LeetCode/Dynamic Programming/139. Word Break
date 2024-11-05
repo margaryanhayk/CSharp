@@ -1,0 +1,24 @@
+//Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+//Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+public class Solution 
+{
+    public bool WordBreak(string s, IList<string> wordDict)
+    {
+        HashSet<string> dict = new HashSet<string>(wordDict);
+        bool[] dp = new bool[s.Length + 1];
+        dp[0] = true;
+        for(int ix = 1; ix < dp.Length; ++ix)
+        {
+            for(int j = ix - 1; j > -1; --j)
+            {
+                if (dp[j] && dict.Contains(s.Substring(j, ix - j)))
+                {
+                    dp[ix] = true;
+                    break;
+                }
+            }
+        }
+        return dp[s.Length];
+    }
+}
