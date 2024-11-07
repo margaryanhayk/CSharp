@@ -1,0 +1,43 @@
+//Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+//A subarray is a contiguous non-empty sequence of elements within an array.
+    
+
+    public int SubarraySum(int[] nums, int k)
+    {
+        int count = 0;
+        int prefixSum = 0;
+        Dictionary<int, int> container = new Dictionary<int, int>();
+        container[0] = 1;
+        foreach (var num in nums)
+        {
+            prefixSum += num;
+            if (container.ContainsKey(prefixSum - k))
+                count += container[prefixSum - k];
+            if(container.ContainsKey(prefixSum))
+                container[prefixSum]++;
+            else
+                container[prefixSum] = 1;
+        }
+
+        return count;
+    }
+
+    public static int SubarraySum(int[] nums, int k) // This is bad, O(n2)
+    {
+        int count = 0;
+        int prefixSum = 0;
+        Dictionary<int, int> container = new Dictionary<int, int>();
+        container[0] = 1;
+        foreach (var num in nums)
+        {
+            prefixSum += num;
+            if (container.ContainsKey(prefixSum - k))
+                ++count;
+            if(container.ContainsKey(prefixSum))
+                container[prefixSum]++;
+            else
+                container[prefixSum] = 1;
+        }
+
+        return count;
+    }
