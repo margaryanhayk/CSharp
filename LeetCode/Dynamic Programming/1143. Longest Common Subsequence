@@ -3,25 +3,21 @@
 
 public class Solution 
 {
-    public int LongestCommonSubsequence(string text1, string text2) 
+    public int LongestCommonSubsequence(string text1, string text2)
     {
-        int m = text1.Length;
-        int n = text2.Length;
-        int[,] dp = new int[m + 1, n + 1];
-        for(int ix = 0; ix < m + 1; ++ix)
-            dp[ix, 0] = 0;                    
-        for(int ix = 0; ix < n + 1; ++ix)
-            dp[0, ix] = 0;
-        for(int ix = 1; ix < m + 1; ++ix)
+        int[,] dp = new int[text1.Length + 1, text2.Length + 1];
+
+        for (int ix = 1; ix < text1.Length + 1; ++ix)
         {
-            for(int jix = 1; jix < n + 1; ++jix)
+            for (int iy = 1; iy < text2.Length + 1; ++iy)
             {
-                if(text1[ix - 1] == text2[jix - 1])
-                    dp[ix, jix] = dp[ix  - 1, jix - 1] + 1;
+                if (text1[ix - 1] == text2[iy - 1])
+                    dp[ix, iy] = dp[ix - 1, iy - 1] + 1;
                 else
-                   dp[ix, jix] = Math.Max(dp[ix - 1, jix], dp[ix, jix - 1]);                         
+                    dp[ix, iy] = Math.Max(dp[ix - 1, iy], dp[ix, iy - 1]);
             }
         }
-        return dp[m,n];
+
+        return dp[text1.Length, text2.Length];
     }
 }
