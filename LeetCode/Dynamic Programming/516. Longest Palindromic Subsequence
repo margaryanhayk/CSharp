@@ -1,0 +1,23 @@
+//Given a string s, find the longest palindromic subsequence's length in s.
+//A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements.
+
+public class Solution 
+{
+    public int LongestPalindromeSubseq(string s) 
+    {
+        int[,] dp = new int[s.Length, s.Length];
+        for (int ix = 0; ix < s.Length; ++ix)
+            dp[ix, ix] = 1;
+        for (int jix = 1; jix < s.Length; ++jix)
+        {
+            for (int ix = jix; ix < s.Length; ++ix)
+            {
+                if (s[ix] == s[ix - jix])
+                    dp[ix - jix, ix] = dp[ix - jix + 1, ix - 1] + 2;
+                else
+                    dp[ix - jix, ix] = ix >= jix ? Math.Max(dp[ix - jix, ix - 1], dp[ix - jix + 1, ix]) : dp[ix - jix, ix - jix];
+            }
+        }
+        return dp[0, s.Length - 1];
+    }
+}
