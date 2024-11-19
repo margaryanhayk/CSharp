@@ -1,0 +1,19 @@
+//Given an integer n, return the number of structurally unique BST's (binary search trees) which has exactly n nodes of unique values from 1 to n.
+
+public class Solution 
+{
+    public int NumTrees(int n)
+    {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for(int ix = 1; ix < n; ++ix)
+        {
+            int sum = 0;
+            for(int iy = 0; iy <= ix; ++iy)
+                sum += dp[iy] * dp[ix - iy];
+            dp[ix + 1] = sum;
+        }
+        return dp[n];
+    }
+}
