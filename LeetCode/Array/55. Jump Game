@@ -21,6 +21,31 @@ public class Solution
 //////////////////////////////////////////////////
 
 
+//////////    Third Solution   ///////////////////
+
+    public bool CanJump(int[] nums) 
+    {
+        if (nums[0] == 0 && nums.Length > 1)
+            return false;
+        for (int ix = nums.Length - 2; ix > 0; --ix)
+        {
+            if (nums[ix] != 0)
+                continue;
+            for(int iy = ix -1; iy > -1; --iy )
+            {
+                if (iy + nums[iy] > ix)
+                {
+                    ix = iy;
+                    break;
+                }
+                else if (iy == 0)
+                    return false;
+            }
+        }
+        return true;       
+    }
+//////////////////////////////////////////////////
+
 //////////    Second Solution   ///////////////////
 public class Solution
 {
