@@ -1,41 +1,37 @@
 //Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
 //Notice that the solution set must not contain duplicate triplets.
 
-public class Solution
+public class Solution 
 {
     public IList<IList<int>> ThreeSum(int[] nums)
     {
-        Array.Sort(nums);
         List<IList<int>> result = new List<IList<int>>();
-
-        for (int ix = 0; ix < nums.Length - 2; ++ix)
+        Array.Sort(nums);
+        for(int ix = 0; ix < nums.Length - 1; ++ix)
         {
-            if (ix > 0 && nums[ix] == nums[ix - 1]) 
+            if (ix > 0 && nums[ix] == nums[ix - 1])
                 continue;
-
-            int leftIndex = ix + 1;
-            int rightIndex = nums.Length - 1;
-
-            while (leftIndex < rightIndex)
+            if (nums[ix] > 0)
+                break;
+            int left = ix + 1;
+            int right = nums.Length - 1;
+            while(right > left)
             {
-                int sum = nums[ix] + nums[leftIndex] + nums[rightIndex];
-                if (sum == 0)
-                {
-                    result.Add(new List<int> { nums[ix], nums[leftIndex], nums[rightIndex] });
-
-                    while (leftIndex < rightIndex && nums[leftIndex] == nums[leftIndex + 1]) ++leftIndex;
-                    while (leftIndex < rightIndex && nums[rightIndex] == nums[rightIndex - 1]) --rightIndex;
-
-                    leftIndex++;
-                    rightIndex--;
-                }
-                else if (sum < 0)
-                    ++leftIndex;
+                if (-nums[ix] < nums[left] + nums[right])
+                    --right;
+                else if (-nums[ix] > nums[left] + nums[right])
+                    ++left;
                 else
-                    --rightIndex;
+                {
+                    result.Add(new List<int>() { nums[ix], nums[left], nums[right] });
+                    while (left < right && nums[left] == nums[left + 1]) ++left;
+                    while (left < right && nums[right] == nums[right - 1]) --right;
+                    ++left;
+                    --right;
+                }
             }
         }
-
+        
         return result;
     }
 }
