@@ -6,18 +6,13 @@ public class Solution
 {
     public int FindKthLargest(int[] nums, int k)
     {
-        PriorityQueue<int, int> minHeap = new PriorityQueue<int, int>();
-
-        for (int ix = 0; ix < nums.Length; ++ix)
+        PriorityQueue<int, int> maxHeap = new PriorityQueue<int, int>();
+        foreach(var num in nums)
         {
-            if (minHeap.Count < k)
-                minHeap.Enqueue(nums[ix], nums[ix]);
-            else if (nums[ix] > minHeap.Peek())
-            {
-                minHeap.Dequeue();
-                minHeap.Enqueue(nums[ix], nums[ix]);
-            }
+            maxHeap.Enqueue(num, num);
+            if(maxHeap.Count > k)
+                maxHeap.Dequeue();
         }
-        return minHeap.Peek();
+        return maxHeap.Peek();    
     }
 }
