@@ -11,6 +11,24 @@
  *     public TreeNode(int x) { val = x; }
  * }
  */
+
+public class Solution 
+{
+    public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+    {
+        return Rec(root, p, q);
+    }
+
+    private TreeNode Rec(TreeNode node, TreeNode p, TreeNode q)
+    {
+        if (node == null || node == p || node == q)
+            return node;
+        var left = Rec(node.left, p, q);
+        var right = Rec(node.right, p, q);
+        return (left != null && right != null) ? node : left ?? right;
+    }
+}
+
 public class Solution 
 {
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) 
