@@ -31,3 +31,28 @@ public class Solution {
         return result;
     }
 }
+
+//Second aproach
+public class Solution 
+{
+    public IList<IList<string>> GroupAnagrams(string[] strs) 
+    {
+        var nestedDictionary = new Dictionary<string, List<string>>();
+        foreach (var str in strs)
+        {
+            char[] chars = new char[26];
+            foreach (char ch in str)
+                chars[ch - 'a']++;
+            string key = new string(chars);
+            if (nestedDictionary.ContainsKey(key))
+                nestedDictionary[key].Add(str);
+            else
+                nestedDictionary[key] = new List<string> { str };
+        }
+        var result = new List<IList<string>>();
+        foreach (var value in nestedDictionary.Values)
+            result.Add(value);
+
+        return result;
+    }
+}
