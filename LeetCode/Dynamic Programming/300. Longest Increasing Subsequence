@@ -32,17 +32,11 @@ public class Solution
 {
     public int LengthOfLIS(int[] nums)
     {
-        int[] maxLengths = Enumerable.Repeat(1, nums.Length).ToArray();
+        int[] dp = Enumerable.Repeat(1, nums.Length).ToArray();
         for (int ix = 1; ix < nums.Length; ++ix)
-        {
-            int max = 1;
-            for(int x = ix - 1; x >= 0; --x)
-            {
-                if(nums[x] < nums[ix])
-                    max = Math.Max(max, maxLengths[x] + 1);
-            }
-            maxLengths[ix] = max;
-        }
-        return maxLengths.Max();
+            for (int iy = ix - 1; iy > -1; --iy)
+                if (nums[ix] > nums[iy])
+                    dp[ix] = Math.Max(dp[ix], dp[iy] + 1);
+        return dp.Max();     
     }
 }
