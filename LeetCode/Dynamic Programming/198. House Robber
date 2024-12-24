@@ -35,3 +35,22 @@ public class Solution {
         return easyMoney;   
     }
 }
+
+//Recursive, but time limit exception //
+public class Solution 
+{
+    public int Rob(int[] nums)
+    {
+        if (nums.Length == 0)
+            return 0;
+        return Rob2ndRec(nums, 0);
+    }
+
+    private int Rob2ndRec(int[] nums, int start)
+    {
+        if (start > nums.Length - 1)
+            return 0;
+        return Math.Max(nums[start] + Rob2ndRec(nums, start + 2), Rob2ndRec(nums, start + 1));
+    }
+}
+
