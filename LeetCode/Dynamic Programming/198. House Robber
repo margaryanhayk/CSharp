@@ -3,6 +3,8 @@
 //connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 //Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
 
+
+////////////////////////////1////////////////////////////////////
 public class Solution 
 {
     public int Rob(int[] nums)
@@ -16,7 +18,29 @@ public class Solution
         return nums[nums.Length - 1];
     }
 }
-
+////////////////////////////2////////////////////////////////////
+public class Solution 
+{
+    public int Rob(int[] nums)
+    {
+        if (nums.Length == 0)
+            return 0;
+        int[] dp = new int[nums.Length];
+        int result = 0;
+        for (int ix = nums.Length - 1; ix > - 1; --ix)
+        {
+            if ((ix == nums.Length - 1))
+                dp[ix] = nums[ix];
+            else if ((ix == nums.Length - 2))
+                dp[ix] = Math.Max(nums[ix], nums[ix + 1]);
+            else
+                dp[ix] = Math.Max(nums[ix] + dp[ix + 2], dp[ix + 1]);
+            result = Math.Max(result, dp[ix]);
+        }
+        return result;
+    }
+}
+////////////////////////////3////////////////////////////////////
 public class Solution {
     public int Rob(int[] nums) 
     {
@@ -36,6 +60,7 @@ public class Solution {
     }
 }
 
+////////////////////////////4////////////////////////////////////
 //Recursive, but time limit exception //
 public class Solution 
 {
