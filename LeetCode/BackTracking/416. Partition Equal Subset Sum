@@ -1,0 +1,27 @@
+//Given an integer array nums, return true if you can partition the array into two subsets such that the sum of the elements in both subsets is equal or false otherwise.
+
+public class Solution 
+{
+    public bool CanPartition(int[] nums) 
+    {
+        int sum = 0;
+        foreach (var num in nums)
+            sum += num;
+        if (sum % 2 != 0)
+            return false;
+        int half = sum / 2;
+        bool[] dp = new bool[half + 1];
+        dp[0] = true;
+        for (int ix = 0; ix < nums.Length; ++ix)
+        {
+            for (int iy = dp.Length - 1; iy >= nums[ix]; --iy)
+            {
+                if (dp[half])
+                    return true;
+                if (dp[iy - nums[ix]])
+                    dp[iy] = true;
+            }
+        }
+        return dp[half];
+    }
+}
